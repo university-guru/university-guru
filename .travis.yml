@@ -1,0 +1,10 @@
+language: ruby
+rvm: 2.6.1
+cache: bundler
+before_script: bundle update
+script:
+  - ruby -v
+  - gem -v
+  - bundle -v
+  - bundle exec rails test
+  - bundle exec rubocop
