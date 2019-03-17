@@ -5,7 +5,7 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database universityguru_test;' -U postgres
-  - bundle update
+  - bundle install
 script:
   - ruby -v
   - gem -v
