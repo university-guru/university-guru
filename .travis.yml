@@ -4,7 +4,7 @@ cache: bundler
 services:
   - postgresql
 before_script:
-  - psql -c 'create database university-guru-test;' -U postgres
+  - psql -c 'create database universityguru_test;' -U postgres
   - bundle update
 script:
   - ruby -v
