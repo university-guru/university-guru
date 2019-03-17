@@ -3,6 +3,9 @@ rvm: 2.6.1
 cache: bundler
 services:
   - postgresql
+before_install:
+  - gem update --system
+  - gem install bundler
 before_script:
   - psql -c 'create database universityguru_test;' -U postgres
   - bundle install
