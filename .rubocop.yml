@@ -6,6 +6,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Style/EndOfLine:
+  EnforcedStyle: lf
+
 Style/Documentation:
   Enabled: false
 
