@@ -14,5 +14,6 @@ script:
   - ruby -v
   - gem -v
   - bundle -v
+  - RAILS_ENV=test bundle exec rake db:setup
   - RAILS_ENV=test bundle exec rake test
   - rubocop
