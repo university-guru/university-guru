@@ -2,11 +2,13 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*.rb'
 
 Rails:
   Enabled: true
 
-Style/EndOfLine:
+Layout/EndOfLine:
   EnforcedStyle: lf
 
 Style/Documentation:

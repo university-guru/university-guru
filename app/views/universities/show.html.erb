@@ -1,0 +1,33 @@
+<h1><%= @university.name %></h1>
+<p><%= @university.city %>, <%= @university.state %> <%= @university.zip_code %></p>
+<% unless @university.school_site.nil? %>
+  <%= link_to "School Link (#{@university.school_site})", @university.full_url, target: '_blank' %>
+<% end %>
+<% unless @university.student_count.nil? %>
+  <p>UG Student Count: <%= @university.student_count %></p>
+<% end %>
+<% unless @university.cost_out.nil? %>
+  <p>In-State Cost: $<%= "%.2f" % [@university.cost_in] %></p>
+<% end %>
+<% unless @university.cost_out.nil? %>
+  <p>Out-of-State Cost: $<%= "%.2f" % [@university.cost_out] %></p>
+<% end %>
+<% unless @university.acceptance_rate.nil? %>
+  <p>Acceptance Rate: <%= "%.2f" % [@university.acceptance_rate * 100] %>%</p>
+<% end %>
+<% if @university.sat? %>
+  <p>SAT Scores:</p>
+  <ul>
+    <li>Reading: (Q1: <%= @university.q1_sat_reading %>)
+      (Med: <%= @university.med_sat_reading %>)
+      (Q3: <%= @university.q3_sat_reading %>)</li>
+    <li>Math: (Q1: <%= @university.q1_sat_math %>)
+      (Med: <%= @university.med_sat_math %>)
+      (Q3: <%= @university.q3_sat_math %>)</li>
+  </ul>
+<% end %>
+<% if @university.sat? %>
+  <p>ACT Scores: (Q1: <%= @university.q1_act %>)
+    (Med: <%= @university.med_act %>)
+    (Q3: <%= @university.q3_act %>)</p>
+<% end %>
