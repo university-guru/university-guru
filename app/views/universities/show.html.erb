@@ -1,3 +1,5 @@
+<% content_for :title, "#{@university.name}" %>
+
 <h1><%= @university.name %></h1>
 <p><%= @university.city %>, <%= @university.state %> <%= @university.zip_code %></p>
 <% unless @university.school_site.nil? %>

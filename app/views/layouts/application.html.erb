@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UniversityGuru</title>
+	<% @title = yield(:title) %>
+    <title><%= "#{@title} - " unless @title.empty? %>University Guru</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
