@@ -11,6 +11,8 @@
  * It is generally better to create a new file per style scope.
  */
  
+//= depend_on_asset "header-brick.png"
+ 
 $primary: #b61e2e;
 $secondary: #e9ecef;
 
@@ -25,7 +27,7 @@ $theme_link_color_hover: #ffffffcc;
 @import 'universities';
 
 .header {
-	background: linear-gradient(0deg, $theme_primary_trans, $theme_primary_trans), url("header-brick");
+	background: linear-gradient(0deg, $theme_primary_trans, $theme_primary_trans), url('<%= asset_path("header-brick.png") %>');
 	background-repeat: repeat-x;
 }
 
