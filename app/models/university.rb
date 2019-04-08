@@ -10,11 +10,16 @@ class University < ApplicationRecord
     end
   end
 
-  # Determines if this university has SAT score information
-  def sat?
+  # Determines if this university has SAT reading score information
+  def sat_reading?
     !(q1_sat_reading.nil? || med_sat_reading.nil? \
-      || q3_sat_reading.nil? || q1_sat_math.nil? || med_sat_math.nil? \
-      || q3_sat_math.nil?)
+      || q3_sat_reading.nil?)
+  end
+
+  # Determines if this university has SAT math score information
+  def sat_math?
+    !(q1_sat_math.nil? || med_sat_math.nil? \
+        || q3_sat_math.nil?)
   end
 
   # Determines if this university has ACT score information

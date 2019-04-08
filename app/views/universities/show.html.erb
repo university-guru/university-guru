@@ -1,35 +1,311 @@
 <% content_for :title, "#{@university.name}" %>
 
-<h1><%= @university.name %></h1>
-<p><%= @university.city %>, <%= @university.state %> <%= @university.zip_code %></p>
-<% unless @university.school_site.nil? %>
-  <%= link_to "School Link (#{@university.school_site})", @university.full_url, target: '_blank' %>
-<% end %>
-<% unless @university.student_count.nil? %>
-  <p>UG Student Count: <%= @university.student_count %></p>
-<% end %>
-<% unless @university.cost_out.nil? %>
-  <p>In-State Cost: $<%= "%.2f" % [@university.cost_in] %></p>
-<% end %>
-<% unless @university.cost_out.nil? %>
-  <p>Out-of-State Cost: $<%= "%.2f" % [@university.cost_out] %></p>
-<% end %>
-<% unless @university.acceptance_rate.nil? %>
-  <p>Acceptance Rate: <%= "%.2f" % [@university.acceptance_rate * 100] %>%</p>
-<% end %>
-<% if @university.sat? %>
-  <p>SAT Scores:</p>
-  <ul>
-    <li>Reading: (Q1: <%= @university.q1_sat_reading %>)
-      (Med: <%= @university.med_sat_reading %>)
-      (Q3: <%= @university.q3_sat_reading %>)</li>
-    <li>Math: (Q1: <%= @university.q1_sat_math %>)
-      (Med: <%= @university.med_sat_math %>)
-      (Q3: <%= @university.q3_sat_math %>)</li>
-  </ul>
-<% end %>
-<% if @university.sat? %>
-  <p>ACT Scores: (Q1: <%= @university.q1_act %>)
-    (Med: <%= @university.med_act %>)
-    (Q3: <%= @university.q3_act %>)</p>
-<% end %>
+<script>
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+	$(function () {
+	  $('[data-toggle="popover"]').popover()
+	})
+	$('#page-tab a').on('click', function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+	$('#test-score-tab a').on('click', function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>
+
+<div class="row">
+	<div class="col-lg-9 col-md-8 col-sm-8 mb-2">
+		<h1 class="mb-0"><%= @university.name %></h1>
+		<span class="text-muted"><%= @university.city %>, <%= @university.state %> <%= @university.zip_code %></span>
+	</div>
+	<div class="col-lg-3 col-md-4 col-sm-4 text-right">
+		<% unless @university.school_site.nil? %> 
+			<%= link_to "View School's Site", @university.full_url, target: "_blank", role: "button", class: "btn btn-block btn-secondary" %>
+		<% end %>
+	</div>
+</div>
+
+<!-- Academics, Tuition & Scholarships, etc. tabs -->
+<nav>
+	<div class="nav nav-tabs mt-4 mb-2" id="page-tab" role="tablist">
+		<a class="nav-item nav-link active" id="academics-tab" data-toggle="tab" href="#academics" role="tab" aria-controls="academics" aria-selected="true">Academics</a>
+		<a class="nav-item nav-link" id="tuition-scholarships-tab" data-toggle="tab" href="#tuition-scholarships" role="tab" aria-controls="tuition-scholarships" aria-selected="true">Tuition & Scholarships</a>
+	</div>
+</nav>
+<!-- Tab contents -->
+<div class="tab-content" id="page-tabContent">
+	<!-- Academics tab -->
+	<div class="tab-pane show active" id="academics" role="tabpanel" aria-labelledby="academics-tab">
+		<div class="row mt-4">
+			<div class="col text-center">
+				<i class="fas fa-university fa-5x"></i>
+				<% if @university.student_count.nil? %>
+					<h3 class="text-muted mt-2 mb-0">Not Reported</h3>
+				<% else %>
+					<h3 class="mt-2 mb-0"><%= number_with_precision(@university.student_count, precision: 0, delimiter: ",") %></h3>
+				<% end %>
+				<span class="mt-0 text-muted">Undergraduate Students</span>
+			</div>
+			<div class="col text-center">
+				<i class="fas fa-vote-yea fa-5x"></i>
+				<% if @university.acceptance_rate.nil? %>
+					<h3 class="text-muted mt-2 mb-0">Not Reported</h3>
+				<% else %>
+					<h3 class="mt-2 mb-0"><%= "%.2f" % [@university.acceptance_rate * 100] %>%</h3>		
+				<% end %>
+					<span class="mt-0 text-muted">Acceptance Rate</span>		
+			</div>
+		</div>
+		<h4 class="mt-4 mb-1">Test Scores</h4>
+		<hr class="mt-0">
+		<div class="row">
+			<div class="col-sm-2">
+				<!-- SAT, ACT, etc. tabs -->
+				<div class="nav flex-column nav-pills mb-2" id="test-score-tab" role="tablist" aria-orientation="vertical">
+					<a class="nav-link active" id="sat-tab" data-toggle="pill" href="#sat" role="tab" aria-controls="sat" aria-selected="true">SAT</a>
+					<a class="nav-link" id="act-tab" data-toggle="pill" href="#act" role="tab" aria-controls="act" aria-selected="false">ACT</a>
+				</div>
+			</div>
+			<div class="col-sm-10">
+				<!-- Tab contents -->
+				<div class="tab-content" id="test-score-tabContent">
+				<!-- SAT tab -->
+					<div class="tab-pane show active" id="sat" role="tabpanel" aria-labelledby="sat-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<h5>Reading</h5>
+								<% if @university.sat_reading? %>
+									<div class="row">
+										<div class="col align-self-start text-left">
+											0
+										</div>
+										<div class="col align-self-end text-right">
+											800
+										</div>
+									</div>
+									<!-- Bar for reading score -->
+									<div class="progress">
+										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{@university.q1_sat_reading / 8.0}%; width: #{(@university.q3_sat_reading - @university.q1_sat_reading) / 8.0}%;", \
+										"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "SAT Reading Score Statistics", \
+											"data-content": \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"25<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q1_sat_reading}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"50<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.med_sat_reading}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"75<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q3_sat_reading}" \
+													"</span>" \
+												"</div>" \
+											"</div>"
+											%>
+									</div>
+									<div class="container-fluid text-center">
+										<h6 class="mt-2 mb-0"><%= @university.q1_sat_reading %> - <%= @university.q3_sat_reading %></h6>
+										<span class="mt-0 text-muted test-score-sub">Middle 50%</span>
+									</div>
+								<% else %>
+									<span class="h6 text-muted">No SAT reading data reported.</span>
+								<% end %>
+							</div>
+							<div class="col-md-6">
+								<h5>Mathematics</h5>
+								<% if @university.sat_math? %>
+									<div class="row">
+										<div class="col align-self-start text-left">
+											0
+										</div>
+										<div class="col align-self-end text-right">
+											800
+										</div>
+									</div>
+									<!-- Bar for mathematics score -->
+									<div class="progress">
+										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{@university.q1_sat_math / 8.0}%; width: #{(@university.q3_sat_math - @university.q1_sat_math) / 8.0}%;", \
+										"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "SAT Math Score Statistics", \
+											"data-content": \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"25<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q1_sat_math}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"50<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.med_sat_math}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"75<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q3_sat_math}" \
+													"</span>" \
+												"</div>" \
+											"</div>"
+											%>
+									</div>
+									<div class="container-fluid text-center">
+										<h6 class="mt-2 mb-0"><%= @university.q1_sat_math %> - <%= @university.q3_sat_math %></h6>
+										<span class="mt-0 text-muted test-score-sub">Middle 50%</span>
+									</div>
+								<% else %>
+									<span class="h6 text-muted">No SAT mathematics data reported.</span>
+								<% end %>
+							</div>
+						</div>
+					</div>
+					<!-- ACT tab -->
+					<div class="tab-pane" id="act" role="tabpanel" aria-labelledby="act-tab">
+						<div class="row">
+							<div class="col-md-6">
+								<h5>
+									Cumulative
+									<!-- Give tooltip to explain ACT scoring (average of all four sections rounded to the nearest whole number) -->
+									<small>
+										<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" data-html="true" title="ACT scoring is based on the rounded average of the individual section scores<br>(English, Math, Reading, and Science)"></i>
+									</small>
+								</h5>
+								<% if @university.act? %>
+									<div class="row">
+										<div class="col align-self-start text-left">
+											0
+										</div>
+										<div class="col align-self-end text-right">
+											36
+										</div>
+									</div>
+									<!-- Bar for cumulative score -->
+									<div class="progress">
+										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{100 * @university.q1_act / 36.0}%; width: #{100 * (@university.q3_act - @university.q1_act) / 36.0}%;", \
+											"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "ACT Score Statistics", \
+											"data-content": \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"25<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q1_act}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"50<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.med_act}" \
+													"</span>" \
+												"</div>" \
+											"</div>" \
+											"<div class=\"row\">" \
+												"<div class=\"col-8 text-right\">" \
+													"<span class=\"h6 popover-label\">" \
+														"75<sup>th</sup> Percentile" \
+													"</span>" \
+												"</div>" \
+												"<div class=\"col-4 text-left\">" \
+													"<span>" \
+														"#{@university.q3_act}" \
+													"</span>" \
+												"</div>" \
+											"</div>"
+											%>
+									</div>
+									<div class="container-fluid text-center">
+										<h6 class="mt-2 mb-0"><%= @university.q1_act %> - <%= @university.q3_act %></h6>
+										<span class="mt-0 text-muted test-score-sub">Middle 50%</span>
+									</div>
+								<% else %>
+									<span class="h6 text-muted">No ACT data reported.</span>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Tuition & Scholarships tab -->
+	<div class="tab-pane" id="tuition-scholarships" role="tabpanel" aria-labelledby="tuition-scholarships-tab">
+		<h4 class="mt-4 mb-1">Tuition</h4>
+		<hr class="mt-0">
+		<div class="row equal">
+			<div class="col-lg-2 col-sm-3">
+				<span class="h6">In-State Tuition</span>
+			</div>
+			<div class="col">
+				<% if @university.cost_in.nil? %>
+					<span class="text-muted">Not reported</span>
+				<% else %>
+					<span>$<%= number_with_precision(@university.cost_in, precision: 2, delimiter: ",") %></span>
+				<% end %>
+			</div>
+		</div>
+		<div class="row equal mt-1">
+			<div class="col-lg-2 col-sm-3">
+				<span class="h6">Out-Of-State Tuition</span>
+			</div>
+			<div class="col">
+				<% if @university.cost_out.nil? %>
+					<span class="text-muted">Not reported</span>
+				<% else %>
+					<span>$<%= number_with_precision(@university.cost_out, precision: 2, delimiter: ",") %></span>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
