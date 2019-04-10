@@ -1,0 +1,42 @@
+<div class="container-fluid header">
+	<div class="row align-items-center">
+		<div class="col-lg-3">
+			<%= form_tag({controller: "universities", action: "index"}, method: "get", class: "row equal no-gutters mt-2 mb-0 h-100") do %>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fas fa-search"></i></span>
+					</div>
+					<%= text_field_tag(:q, params["q"], class: "form-control", placeholder: "Search...") %>
+					<div class="input-group-append">
+						<%= submit_tag("Search", name: "", class: "btn btn-secondary border-left") %>
+					</div>
+				</div>
+			<% end %>
+			<button class="advanced-search mt-0 mb-1" data-toggle="modal" data-target="#advancedSearchModal">Advanced Search</button>
+		</div>
+		<div class="col-lg-6">
+			<%= link_to universities_path, class: "center-block header-link" do %>
+				<h1 class="text-center">University Guru</h1>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="advancedSearchModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<%= form_tag({controller: "universities", action: "index"}, method: "get") do %>
+				<div class="modal-header">
+					<h5 class="modal-title" id="advancedSearchModalLabel">Advanced Search</h5>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<%= submit_tag("Search", name: "", class: "btn btn-primary") %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

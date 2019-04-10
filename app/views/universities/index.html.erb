@@ -1,17 +1,8 @@
-<%= link_to controller: :universities, action: :index do %>
-  <h1>Universities</h1>
-<% end %>
-
-<%= form_tag({controller: "universities", action: "index"}, method: "get") do %>
-  <%= text_field_tag(:q, params['q']) %>
-  <%= submit_tag("Search", name: "") %>
-<% end %>
-
 <% unless params['q'].blank? %>
   <p>Search: <%= params['q'] %></p>
 <% end %>
 
-<%= will_paginate @universities %>
+<%= will_paginate @universities, list_classes: %w(pagination justify-content-center) %>
 
 <% @universities.each do |university| %>
   <%= link_to university_path(university) do %>
@@ -19,4 +10,4 @@
   <% end %>
 <% end %>
 
-<%= will_paginate @universities %>
+<%= will_paginate @universities, list_classes: %w(pagination justify-content-center) %>

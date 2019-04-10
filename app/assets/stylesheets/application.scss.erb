@@ -1,0 +1,71 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ */
+ 
+//= depend_on_asset "header-brick.png"
+ 
+$primary: #b61e2e;
+$secondary: #e9ecef;
+
+@import 'bootstrap';
+
+$theme_primary: #b61e2e;
+$theme_primary_trans: #b61e2eaa;
+
+$theme_link_color: #ffffff;
+$theme_link_color_hover: #ffffffcc;
+
+@import 'universities';
+
+.header {
+	background: linear-gradient(0deg, $theme_primary_trans, $theme_primary_trans), url('<%= asset_path("header-brick.png") %>');
+	background-repeat: repeat-x;
+}
+
+.header-link, .header-link:visited {
+	color: $theme_link_color;
+	text-decoration: none;
+}
+
+.header-link:hover, .header-link:active {
+	color: $theme_link_color_hover;
+	text-decoration: none;
+}
+
+.advanced-search, .advanced-search:visited, .advanced-search:focus {
+	background-color: Transparent;
+	border: none;
+	outline: none;
+	color: $theme_link_color;
+	text-decoration: underline;
+	font-size: 9pt;
+}
+
+.advanced-search:hover, .advanced-search:active {
+	outline: none;
+	color: $theme_link_color_hover;
+	text-decoration: none;
+}
+
+.footer {
+	background: $theme_primary;
+	color: white;
+	font-size: 10pt;
+}
+
+.pointer-cursor {
+	cursor: pointer;
+}
+
+.no-focus-outline:focus {
+	outline: none;
+}
