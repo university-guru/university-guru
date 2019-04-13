@@ -23,7 +23,7 @@
 		<span class="text-muted"><%= @university.city %>, <%= @university.state %> <%= @university.zip_code %></span>
 	</div>
 	<div class="col-lg-3 col-md-4 col-sm-4 text-right">
-		<% unless @university.school_site.nil? %> 
+		<% unless @university.school_site.nil? %>
 			<%= link_to "View School's Site", @university.full_url, target: "_blank", role: "button", class: "btn btn-block btn-secondary" %>
 		<% end %>
 	</div>
@@ -55,9 +55,9 @@
 				<% if @university.acceptance_rate.nil? %>
 					<h3 class="text-muted mt-2 mb-0">Not Reported</h3>
 				<% else %>
-					<h3 class="mt-2 mb-0"><%= "%.2f" % [@university.acceptance_rate * 100] %>%</h3>		
+					<h3 class="mt-2 mb-0"><%= number_with_precision(@university.acceptance_rate, precision: 0) %>%</h3>
 				<% end %>
-					<span class="mt-0 text-muted">Acceptance Rate</span>		
+					<span class="mt-0 text-muted">Acceptance Rate</span>
 			</div>
 		</div>
 		<h4 class="mt-4 mb-1">Test Scores</h4>
@@ -89,46 +89,7 @@
 									</div>
 									<!-- Bar for reading score -->
 									<div class="progress">
-										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{@university.q1_sat_reading / 8.0}%; width: #{(@university.q3_sat_reading - @university.q1_sat_reading) / 8.0}%;", \
-										"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "SAT Reading Score Statistics", \
-											"data-content": \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"25<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q1_sat_reading}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"50<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.med_sat_reading}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"75<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q3_sat_reading}" \
-													"</span>" \
-												"</div>" \
-											"</div>"
-											%>
+										<%= content_tag :div, "", class: "progress-bar bg-success no-focus-outline", style: "margin-left: #{@university.q1_sat_reading / 8.0}%; width: #{(@university.q3_sat_reading - @university.q1_sat_reading) / 8.0}%;" %>
 									</div>
 									<div class="container-fluid text-center">
 										<h6 class="mt-2 mb-0"><%= @university.q1_sat_reading %> - <%= @university.q3_sat_reading %></h6>
@@ -151,46 +112,7 @@
 									</div>
 									<!-- Bar for mathematics score -->
 									<div class="progress">
-										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{@university.q1_sat_math / 8.0}%; width: #{(@university.q3_sat_math - @university.q1_sat_math) / 8.0}%;", \
-										"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "SAT Math Score Statistics", \
-											"data-content": \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"25<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q1_sat_math}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"50<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.med_sat_math}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"75<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q3_sat_math}" \
-													"</span>" \
-												"</div>" \
-											"</div>"
-											%>
+										<%= content_tag :div, "", class: "progress-bar bg-success no-focus-outline", style: "margin-left: #{@university.q1_sat_math / 8.0}%; width: #{(@university.q3_sat_math - @university.q1_sat_math) / 8.0}%;" %>
 									</div>
 									<div class="container-fluid text-center">
 										<h6 class="mt-2 mb-0"><%= @university.q1_sat_math %> - <%= @university.q3_sat_math %></h6>
@@ -224,46 +146,7 @@
 									</div>
 									<!-- Bar for cumulative score -->
 									<div class="progress">
-										<%= content_tag :div, "", class: "progress-bar bg-success pointer-cursor no-focus-outline", style: "margin-left: #{100 * @university.q1_act / 36.0}%; width: #{100 * (@university.q3_act - @university.q1_act) / 36.0}%;", \
-											"data-toggle": "popover", tabindex: 0, "data-trigger": "focus", "data-placement": "top", "data-html": "true", title: "ACT Score Statistics", \
-											"data-content": \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"25<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q1_act}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"50<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.med_act}" \
-													"</span>" \
-												"</div>" \
-											"</div>" \
-											"<div class=\"row\">" \
-												"<div class=\"col-8 text-right\">" \
-													"<span class=\"h6 popover-label\">" \
-														"75<sup>th</sup> Percentile" \
-													"</span>" \
-												"</div>" \
-												"<div class=\"col-4 text-left\">" \
-													"<span>" \
-														"#{@university.q3_act}" \
-													"</span>" \
-												"</div>" \
-											"</div>"
-											%>
+										<%= content_tag :div, "", class: "progress-bar bg-success no-focus-outline", style: "margin-left: #{100 * @university.q1_act / 36.0}%; width: #{100 * (@university.q3_act - @university.q1_act) / 36.0}%;"	%>
 									</div>
 									<div class="container-fluid text-center">
 										<h6 class="mt-2 mb-0"><%= @university.q1_act %> - <%= @university.q3_act %></h6>
@@ -281,11 +164,11 @@
 	</div>
 	<!-- Tuition & Scholarships tab -->
 	<div class="tab-pane" id="tuition-scholarships" role="tabpanel" aria-labelledby="tuition-scholarships-tab">
-		<h4 class="mt-4 mb-1">Tuition</h4>
+		<h4 class="mt-4 mb-1">Cost of Attendance</h4>
 		<hr class="mt-0">
 		<div class="row equal">
 			<div class="col-lg-2 col-sm-3">
-				<span class="h6">In-State Tuition</span>
+				<span class="h6">In-State Costs</span>
 			</div>
 			<div class="col">
 				<% if @university.cost_in.nil? %>
@@ -297,7 +180,7 @@
 		</div>
 		<div class="row equal mt-1">
 			<div class="col-lg-2 col-sm-3">
-				<span class="h6">Out-Of-State Tuition</span>
+				<span class="h6">Out-Of-State Costs</span>
 			</div>
 			<div class="col">
 				<% if @university.cost_out.nil? %>

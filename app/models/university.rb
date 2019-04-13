@@ -12,19 +12,17 @@ class University < ApplicationRecord
 
   # Determines if this university has SAT reading score information
   def sat_reading?
-    !(q1_sat_reading.nil? || med_sat_reading.nil? \
-      || q3_sat_reading.nil?)
+    !(q1_sat_reading.nil? || q3_sat_reading.nil?)
   end
 
   # Determines if this university has SAT math score information
   def sat_math?
-    !(q1_sat_math.nil? || med_sat_math.nil? \
-        || q3_sat_math.nil?)
+    !(q1_sat_math.nil? || q3_sat_math.nil?)
   end
 
   # Determines if this university has ACT score information
   def act?
-    !(q1_act.nil? || med_act.nil? || q3_act.nil?)
+    !(q1_act.nil? || q3_act.nil?)
   end
 
   # Retrieves the school's URL prefixed with 'http://'
