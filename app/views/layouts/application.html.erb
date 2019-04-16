@@ -6,18 +6,22 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-	<%= render 'shared/header' %>
-	<div class="container-fluid mt-2 mb-2 content-body">
-		<%= yield %>
-	</div>
-	<%= render 'shared/footer' %>
+    <div class="page">
+    	<%= render 'shared/header' %>
+      <div class="content-wrapper">
+      	<div class="container-fluid mt-2 mb-2 content-body">
+      		<%= yield %>
+      	</div>
+      </div>
+    	<%= render 'shared/footer' %>
+    </div>
   </body>
 </html>

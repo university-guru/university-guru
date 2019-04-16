@@ -10,9 +10,9 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  */
- 
+
 //= depend_on_asset "header-brick.png"
- 
+
 $primary: #b61e2e;
 $secondary: #e9ecef;
 
@@ -24,7 +24,24 @@ $theme_primary_trans: #b61e2eaa;
 $theme_link_color: #ffffff;
 $theme_link_color_hover: #ffffffcc;
 
+$footer_height: 2em;
+
 @import 'universities';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page {
+  min-height: 100%;
+  position: relative;
+}
+
+.content-wrapper {
+  padding-bottom: $footer_height;
+}
 
 .header {
 	background: linear-gradient(0deg, $theme_primary_trans, $theme_primary_trans), url('<%= asset_path("header-brick.png") %>');
@@ -57,6 +74,9 @@ $theme_link_color_hover: #ffffffcc;
 }
 
 .footer {
+  position: absolute;
+  bottom: 0;
+  height: $footer_height;
 	background: $theme_primary;
 	color: white;
 	font-size: 10pt;

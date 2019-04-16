@@ -25,7 +25,7 @@ end
 def create(row)
   # Add a University object to the database based on the JSON data
   # recieved from the data.gov API
-  # NOTE: SAT/ACT scores are stored as quartiles (first quartile, median, third quartile)
+  # NOTE: SAT/ACT scores are stored as quartiles (first quartile, third quartile)
   University.create(
     name: row[fields[:name]],
     city: row[fields[:city]],

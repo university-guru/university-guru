@@ -1,13 +1,79 @@
-<% unless params['q'].blank? %>
-  <p>Search: <%= params['q'] %></p>
+<% if params['mode'] == 'adv' || params['q'].present? %>
+  <p class="small font-weight-bold mb-1">Search Criteria:</p>
 <% end %>
-
-<%= will_paginate @universities, list_classes: %w(pagination justify-content-center) %>
-
-<% @universities.each do |university| %>
-  <%= link_to university_path(university) do %>
-    <h3><%= university.name %></h3>
+<% if params['mode'] == 'adv' %>
+  <% if params['name'].present? %>
+    <span class="badge badge-light">Name: <%= params['name'].strip %></span>
   <% end %>
+  <% if params['city'].present? %>
+    <span class="badge badge-light">City: <%= params['city'].strip %></span>
+  <% end %>
+  <% if params['state'].present? %>
+    <span class="badge badge-light">State: <%= params['state'].strip %></span>
+  <% end %>
+  <% if params['zip'].present? %>
+    <span class="badge badge-light">ZIP Code: <%= params['zip'].strip %></span>
+  <% end %>
+  <% if params['size_min'].present? %>
+    <span class="badge badge-light">School Size > <%= number_with_precision(params['size_min'].strip.to_i, precision: 0, delimiter: ',') %></span>
+  <% end %>
+  <% if params['size_max'].present? %>
+    <span class="badge badge-light">School Size < <%= number_with_precision(params['size_max'].strip.to_i, precision: 0, delimiter: ',') %></span>
+  <% end %>
+  <% if params['acceptance_rate_min'].present? %>
+    <span class="badge badge-light">Acceptance Rate > <%= params['acceptance_rate_min'].strip %>%</span>
+  <% end %>
+  <% if params['acceptance_rate_max'].present? %>
+    <span class="badge badge-light">Acceptance Rate < <%= params['acceptance_rate_max'].strip %>%</span>
+  <% end %>
+  <% if params['sat_reading_min'].present? %>
+    <span class="badge badge-light">SAT Reading Score > <%= params['sat_reading_min'].strip %></span>
+  <% end %>
+  <% if params['sat_reading_max'].present? %>
+    <span class="badge badge-light">SAT Reading Score < <%= params['sat_reading_max'].strip %></span>
+  <% end %>
+  <% if params['sat_math_min'].present? %>
+    <span class="badge badge-light">SAT Math Score > <%= params['sat_math_min'].strip %></span>
+  <% end %>
+  <% if params['sat_math_max'].present? %>
+    <span class="badge badge-light">SAT Math Score < <%= params['sat_math_max'].strip %></span>
+  <% end %>
+  <% if params['act_min'].present? %>
+    <span class="badge badge-light">ACT Score > <%= params['act_min'].strip %></span>
+  <% end %>
+  <% if params['act_max'].present? %>
+    <span class="badge badge-light">ACT Score > <%= params['act_max'].strip %></span>
+  <% end %>
+  <% if params['cost_in_min'].present? %>
+    <span class="badge badge-light">In-State Costs > $<%= number_with_precision(params['cost_in_min'].strip.to_f, precision: 2, delimiter: ',') %></span>
+  <% end %>
+  <% if params['cost_in_max'].present? %>
+    <span class="badge badge-light">In-State Costs < $<%= number_with_precision(params['cost_in_max'].strip.to_f, precision: 2, delimiter: ',') %></span>
+  <% end %>
+  <% if params['cost_out_min'].present? %>
+    <span class="badge badge-light">Out-of-State Costs > $<%= number_with_precision(params['cost_out_min'].strip.to_f, precision: 2, delimiter: ',') %></span>
+  <% end %>
+  <% if params['cost_out_max'].present? %>
+    <span class="badge badge-light">Out-of-State Costs < $<%= number_with_precision(params['cost_out_max'].strip.to_f, precision: 2, delimiter: ',') %></span>
+  <% end %>
+<% elsif params['q'].present? %>
+  <span class="badge badge-light">Query: <%= params['q'].strip %></span>
+<% end %>
+<% if params['mode'] == 'adv' || params['q'].present? %>
+  <h6 class="mt-3"><%= "#{@result_size} #{'Result'.pluralize(@result_size)}" %></h6>
+  <hr>
 <% end %>
 
-<%= will_paginate @universities, list_classes: %w(pagination justify-content-center) %>
+<% unless @universities.empty? %>
+  <%= will_paginate @universities, page_links: false, previous_label: "Previous", next_label: "Next", list_classes: %w(pagination justify-content-center d-flex d-md-none) %>
+  <%= will_paginate @universities, list_classes: %w(pagination justify-content-center d-none d-sm-none d-md-flex) %>
+
+  <% @universities.each do |university| %>
+    <%= link_to university_path(university) do %>
+      <h3><%= university.name %></h3>
+    <% end %>
+  <% end %>
+
+  <%= will_paginate @universities, page_links: false, previous_label: "Previous", next_label: "Next", list_classes: %w(pagination justify-content-center d-flex d-md-none) %>
+  <%= will_paginate @universities, list_classes: %w(pagination justify-content-center d-none d-sm-none d-md-flex) %>
+<% end %>
