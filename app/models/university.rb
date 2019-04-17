@@ -78,7 +78,7 @@ class University < ApplicationRecord
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   # rubocop:disable Metrics/ParameterLists
-  def self.adv_search(name, city, state, _zip, size_min, size_max,
+  def self.adv_search(name, city, state, zip, size_min, size_max,
                       acceptance_rate_min, acceptance_rate_max, sat_reading_min,
                       sat_reading_max, sat_math_min, sat_math_max, act_min, act_max,
                       cost_in_min, cost_in_max, cost_out_min, cost_out_max)
@@ -98,6 +98,11 @@ class University < ApplicationRecord
     if state.present?
       query += "#{'AND ' if query.present?}lower(state) like ? "
       params << "%#{state.downcase}%"
+    end
+
+    if zip.present?
+      query += "#{'AND ' if query.present?}lower(zip_code) like ? "
+      params << "%#{zip.downcase}%"
     end
 
     if size_min.present?
