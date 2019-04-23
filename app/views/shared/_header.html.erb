@@ -22,9 +22,11 @@
 			<button class="advanced-search mt-0 mb-1" data-toggle="modal" data-target="#advancedSearchModal">Advanced Search</button>
 		</div>
 		<div class="col-lg-6">
-			<%= link_to universities_path, class: "center-block header-link" do %>
-				<h1 class="text-center">University Guru</h1>
-			<% end %>
+				<%= link_to universities_path, class: "text-center d-block center-block p-1 header-link" do %>
+					<%= image_tag("university-guru-logo.png", alt: "Logo", size: "50x50", class: "d-inline-block align-middle") %>
+					<span class="h1 align-middle my-auto ml-2">University Guru</span>
+				<% end %>
+			</div>
 		</div>
 	</div>
 </div>
