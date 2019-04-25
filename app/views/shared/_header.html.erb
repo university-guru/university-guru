@@ -1,0 +1,210 @@
+<script>
+	$('#adv-search-tab a').on('click', function(e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>
+
+<div class="container-fluid header">
+	<div class="row align-items-center">
+		<div class="col-lg-3">
+			<%= form_tag({controller: "universities", action: "index"}, method: "get", class: "row equal no-gutters mt-2 mb-0 h-100") do %>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fas fa-search"></i></span>
+					</div>
+					<%= text_field_tag(:q, params["q"], class: "form-control", placeholder: "Search...") %>
+					<div class="input-group-append">
+						<%= submit_tag("Search", name: "", class: "btn btn-secondary border-left") %>
+					</div>
+				</div>
+			<% end %>
+			<button class="advanced-search mt-0 mb-1" data-toggle="modal" data-target="#advancedSearchModal">Advanced Search</button>
+		</div>
+		<div class="col-lg-6">
+			<%= link_to universities_path, class: "text-center d-block center-block p-1 header-link" do %>
+				<%= image_tag("university-guru-logo.png", alt: "Logo", class: "d-inline-block align-middle header-logo") %>
+				<span class="h1 align-middle my-auto ml-2">University Guru</span>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="advancedSearchModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<%= form_tag({controller: "universities", action: "index", mode: "adv"}, method: "get") do %>
+				<div class="modal-header">
+					<h5 class="modal-title" id="advancedSearchModalLabel">Advanced Search</h5>
+				</div>
+				<div class="modal-body">
+					<%= hidden_field(nil, :mode, value: "adv") %>
+					<nav>
+						<div class="nav nav-tabs mb-3" id="adv-search-tab" role="tablist">
+							<a class="nav-item nav-link active" id="adv-search-basic-info-tab" data-toggle="tab" href="#adv-search-basic-info" role="tab" aria-controls="adv-search-basic-info" aria-selected="true">Basic Information</a>
+							<a class="nav-item nav-link" id="adv-search-test-scores-tab" data-toggle="tab" href="#adv-search-test-scores" role="tab" aria-controls="adv-search-test-scores" aria-selected="false">Test Scores</a>
+							<a class="nav-item nav-link" id="adv-search-costs-tab" data-toggle="tab" href="#adv-search-costs" role="tab" aria-controls="adv-search-costs" aria-selected="false">Costs</a>
+						</div>
+					</nav>
+					<div class="tab-content" id="adv-search-tabContent">
+						<div class="tab-pane show active" id="adv-search-basic-info" role="tabpanel" aria-labelledby="adv-search-basic-info-tab">
+							<div class="form-group">
+								<label for="nameInput">School Name</label>
+								<%= text_field_tag :name, params["name"], id: "nameInput", class: "form-control", placeholder: "Name..." %>
+							</div>
+							<div class="form-row">
+								<div class="col-sm-5 form-group">
+									<label for="cityInput">City</label>
+									<%= text_field_tag :city, params["city"], id: "cityInput", class: "form-control", placeholder: "City..." %>
+								</div>
+								<div class="col-sm-3 form-group">
+									<label for="stateInput">State</label>
+									<%= select_tag :state, options_for_select(University.states, params["state"]), id: "stateInput", class: "form-control", prompt: "State..." %>
+								</div>
+								<div class="col-sm-4 form-group">
+									<label for="zipInput">ZIP Code</label>
+									<%= number_field_tag :zip, params["zip"], min: 0, id: "zipInput", class: "form-control", placeholder: "ZIP..." %>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Student Count</label>
+								<div class="form-row">
+									<div class="col-sm">
+										<%= number_field_tag :size_min, params["size_min"], min: 0, id: "sizeMinInput", class: "form-control", placeholder: "Minimum..." %>
+									</div>
+									<div class="col-sm-1 text-center my-auto">
+										<span>to</span>
+									</div>
+									<div class="col-sm">
+										<%= number_field_tag :size_max, params["size_max"], min: 0, id: "sizeMaxInput", class: "form-control", placeholder: "Maximum..." %>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Acceptance Rate</label>
+								<div class="form-row">
+									<div class="col-sm input-group">
+										<%= number_field_tag :acceptance_rate_min, params["acceptance_rate_min"], min: 0, max: 100, id: "acceptanceRateMinInput", class: "form-control", placeholder: "Minimum..." %>
+										<div class="input-group-append">
+											<span class="input-group-text font-weight-bold">%</span>
+										</div>
+									</div>
+									<div class="col-sm-1 text-center my-auto">
+										<span>to</span>
+									</div>
+									<div class="col-sm input-group">
+										<%= number_field_tag :acceptance_rate_max, params["acceptance_rate_max"], min: 0, max: 100, id: "acceptanceRateMaxInput", class: "form-control", placeholder: "Maximum..." %>
+										<div class="input-group-append">
+											<span class="input-group-text font-weight-bold">%</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="adv-search-test-scores" role="tabpanel" aria-labelledby="adv-search-test-scores-tab">
+							<nav class="nav nav-pills nav-fill mb-3" id="adv-search-test-tab" role="tablist">
+								<a class="nav-item nav-link active" id="adv-search-test-sat-tab" data-toggle="pill" href="#adv-search-test-sat" role="tab" aria-controls="adv-search-test-sat" aria-selected="true">SAT</a>
+								<a class="nav-item nav-link" id="adv-search-test-act-tab" data-toggle="pill" href="#adv-search-test-act" role="tab" aria-controls="adv-search-test-act" aria-selected="false">ACT</a>
+							</nav>
+							<div class="tab-content" id="adv-search-test-tabContent">
+								<div class="tab-pane show active" id="adv-search-test-sat" role="tabpanel" aria-labelledby="adv-search-test-sat-tab">
+									<div class="form-group">
+										<label>Reading Scores</label>
+										<div class="form-row">
+											<div class="col-sm">
+												<%= number_field_tag :sat_reading_min, params["sat_reading_min"], min: 0, max: 800, id: "satReadingMinInput", class: "form-control", placeholder: "Minimum..." %>
+											</div>
+											<div class="col-sm-1 text-center my-auto">
+												<span>to</span>
+											</div>
+											<div class="col-sm input">
+												<%= number_field_tag :sat_reading_max, params["sat_reading_max"], min: 0, max: 800, id: "satReadingMaxInput", class: "form-control", placeholder: "Maximum..." %>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Math Scores</label>
+										<div class="form-row">
+											<div class="col-sm">
+												<%= number_field_tag :sat_math_min, params["sat_math_min"], min: 0, max: 800, id: "satMathMinInput", class: "form-control", placeholder: "Minimum..." %>
+											</div>
+											<div class="col-sm-1 text-center my-auto">
+												<span>to</span>
+											</div>
+											<div class="col-sm input">
+												<%= number_field_tag :sat_math_max, params["sat_math_max"], min: 0, max: 800, id: "satMathMaxInput", class: "form-control", placeholder: "Maximum..." %>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="adv-search-test-act" role="tabpanel" aria-labelledby="adv-search-test-act-tab">
+									<div class="form-group">
+										<label>Composite Scores</label>
+										<div class="form-row">
+											<div class="col-sm">
+												<%= number_field_tag :act_min, params["act_min"], min: 0, max: 36, id: "actMinInput", class: "form-control", placeholder: "Minimum..." %>
+											</div>
+											<div class="col-sm-1 text-center my-auto">
+												<span>to</span>
+											</div>
+											<div class="col-sm input">
+												<%= number_field_tag :act_max, params["act_max"], min: 0, max: 36, id: "actMaxInput", class: "form-control", placeholder: "Maximum..." %>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="adv-search-costs" role="tabpanel" aria-labelledby="adv-search-costs-tab">
+							<div class="form-group">
+								<label>In-State Costs</label>
+								<div class="form-row">
+									<div class="col-sm input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text font-weight-bold">$</span>
+										</div>
+										<%= number_field_tag :cost_in_min, params["cost_in_min"], min: 0, step: 0.01, id: "costInMinInput", class: "form-control", placeholder: "Minimum..." %>
+									</div>
+									<div class="col-sm-1 text-center my-auto">
+										<span>to</span>
+									</div>
+									<div class="col-sm input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text font-weight-bold">$</span>
+										</div>
+										<%= number_field_tag :cost_in_max, params["cost_in_max"], min: 0, step: 0.01, id: "costInMaxInput", class: "form-control", placeholder: "Maximum..." %>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Out-of-State Costs</label>
+								<div class="form-row">
+									<div class="col-sm input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text font-weight-bold">$</span>
+										</div>
+										<%= number_field_tag :cost_out_min, params["cost_out_min"], min: 0, step: 0.01, id: "costOutMinInput", class: "form-control", placeholder: "Minimum..." %>
+									</div>
+									<div class="col-sm-1 text-center my-auto">
+										<span class="align-middle">to</span>
+									</div>
+									<div class="col-sm input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text font-weight-bold">$</span>
+										</div>
+										<%= number_field_tag :cost_out_max, params["cost_out_max"], min: 0, step: 0.01, id: "costOutMaxInput", class: "form-control", placeholder: "Maximum..." %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<%= submit_tag("Search", name: "", class: "btn btn-primary") %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

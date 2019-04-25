@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -36,6 +37,10 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+# Use Bootstrap JS/CSS libraries
+gem 'bootstrap'
+gem 'jquery-rails'
 
 # PostgreSQL database
 gem 'pg'
@@ -62,7 +67,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'chromedriver-helper', '~> 1.2.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

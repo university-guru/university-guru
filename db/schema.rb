@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_01_113939) do
+ActiveRecord::Schema.define(version: 2019_04_13_204107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2019_04_01_113939) do
     t.string "city"
     t.string "state"
     t.integer "q1_act"
-    t.integer "med_act"
     t.integer "q3_act"
     t.float "acceptance_rate"
     t.float "cost_in"
@@ -34,12 +33,10 @@ ActiveRecord::Schema.define(version: 2019_04_01_113939) do
     t.datetime "updated_at", null: false
     t.string "zip_code"
     t.integer "q1_sat_reading"
-    t.integer "med_sat_reading"
     t.integer "q3_sat_reading"
     t.integer "q1_sat_math"
-    t.integer "med_sat_math"
     t.integer "q3_sat_math"
-    t.index ["id"], unique: true
+    t.index ["id"], name: "index_universities_on_id", unique: true
   end
 
 end
