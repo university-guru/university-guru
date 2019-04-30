@@ -26,6 +26,7 @@ $theme_link_color_hover: #ffffffcc;
 
 $footer_height: 2em;
 
+@import 'fonts';
 @import 'universities';
 
 html, body {
@@ -51,11 +52,17 @@ html, body {
 .header-link, .header-link:visited {
 	color: $theme_link_color;
 	text-decoration: none;
+	font-family: 'SF Collegiate Solid Regular';
 }
 
 .header-link:hover, .header-link:active {
 	color: $theme_link_color_hover;
 	text-decoration: none;
+}
+
+.header-logo {
+	width: 50px;
+	height: 50px;
 }
 
 .advanced-search, .advanced-search:visited, .advanced-search:focus {
