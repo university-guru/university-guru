@@ -1,0 +1,38 @@
+<section class="container-fluid bg">
+  <section class="row justify-content-center">
+    <section class="col-12 col-sm-6 col-md-3">
+      <h2 class="top-text">Sign Up</h2>
+        <% if @user.errors.any? %>
+          <div class="alert alert-danger">
+            <p class="h6"><%= pluralize(@user.errors.count, "Error") + ":" %></p>
+            <ul>
+              <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= form_for @user, url: signup_path, html: {class: "form-container"} do |f| %>
+          <div class="form-group">
+            <label for="name-input">Name</label>
+            <%= f.text_field :name, class: "form-control", id: "name-input", placeholder: "Enter your email" %>
+          </div>
+          <div class="form-group">
+            <label for="email-input">Email address</label>
+            <%= f.email_field :email, class: "form-control", id: "email-input", placeholder: "Enter your email" %>
+          </div>
+          <div class="form-group">
+            <label for="password-input">Password</label>
+            <%= f.password_field :password, class: "form-control", id: "password-input", placeholder: "Password" %>
+          </div>
+          <div class="form-group">
+            <label for="password-verify">Verify Password</label>
+            <%= f.password_field :password_confirmation, class: "form-control", id: "password-verify", placeholder: "Password" %>
+          </div>
+          <%= f.submit "Sign Up", class: "btn btn-primary btn-block" %>
+          <br>
+          <%= link_to "Already have an account?", login_path %>
+        <% end %>
+    </section>
+  </section>
+</section>

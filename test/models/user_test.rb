@@ -3,13 +3,19 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test 'check password' do
-    user = User.create(username: 'user', password: 'password')
-    assert user.check_password('password')
+  test 'valid' do
+    user = User.new(name: 'Example User', email: 'user@example.com', \
+                    password: 'password', password_confirmation: 'password')
+    assert user.valid?
+    user = User.new(name: 'Example User', \
+                    password: 'password', password_confirmation: 'password')
+    assert_not user.valid?
   end
 
-  test 'get username' do
-    user = User.create(username: 'user')
-    assert user.username == 'user'
+  test 'check password' do
+    user = User.create(name: 'Example User', email: 'user@example.com', \
+                       password: 'password', password_confirmation: 'password')
+    assert user.authenticate('password')
+    assert_not user.authenticate('not password')
   end
 end

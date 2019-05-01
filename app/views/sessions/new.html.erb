@@ -1,0 +1,20 @@
+<section class="container-fluid bg">
+    <section class="row justify-content-center">
+        <section class="col-12 col-sm-6 col-md-3">
+            <h2 class="top-text">Log In</h2>
+              <%= form_for :session, url: login_path, html: {class: "form-container"} do |f| %>
+                <div class="form-group">
+                  <label for="email-input">Email address</label>
+                  <%= f.email_field :email, class: "form-control", id: "email-input", placeholder: "Enter your email" %>
+                </div>
+                <div class="form-group">
+                  <label for="password-input">Password</label>
+                  <%= f.password_field :password, class: "form-control", id: "password-input", placeholder: "Password" %>
+                </div>
+                <%= f.submit "Log In", class: "btn btn-primary btn-block" %>
+                <br>
+                <%= link_to "Not a member yet?", signup_path %>
+              <% end %>
+        </section>
+    </section>
+</section>
