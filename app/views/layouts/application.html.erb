@@ -17,6 +17,9 @@
     <div class="page">
     	<%= render "shared/header" %>
       <div class="content-wrapper">
+        <% flash.each do |type, message| %>
+          <div class="alert alert-<%= type %>"><%= message %></div>
+        <% end %>
       	<div class="container-fluid mt-2 mb-2 content-body">
       		<%= yield %>
       	</div>
