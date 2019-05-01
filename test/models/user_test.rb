@@ -4,11 +4,14 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test 'valid' do
-    user = User.new(name: 'Example User', email: 'user@example.com', \
+    user = User.create(name: 'Example User', email: 'user@example.com', \
                     password: 'password', password_confirmation: 'password')
     assert user.valid?
-    user = User.new(name: 'Example User', \
+    user = User.create(name: 'Example User', \
                     password: 'password', password_confirmation: 'password')
+    assert_not user.valid?
+    user = User.create(name: 'Example User', email: 'user@example.com', \
+                      password: 'password', password_confirmation: 'password')
     assert_not user.valid?
   end
 
@@ -17,5 +20,11 @@ class UserTest < ActiveSupport::TestCase
                        password: 'password', password_confirmation: 'password')
     assert user.authenticate('password')
     assert_not user.authenticate('not password')
+  end
+
+  test 'email valid' do
+    user = User.create(name: 'Example User', email: 'userexample.com', \
+                      password: 'password', password_confirmation: 'password')
+    assert_not user.valid?
   end
 end
