@@ -5,6 +5,7 @@ namespace :university_guru do
   task deploy: :environment do
     system 'bundle install'
     Rake::Task['db:setup'].invoke
+    puts "\n\n\nVisit localhost:3000 in a browser to see the application!\n\n\n"
     Process.exec('rails server')
   end
 end
