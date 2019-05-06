@@ -1,0 +1,116 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <% @universities.each do |university| %>
+        <th scope="col"><%= university.name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <% @universities.each do |university| %>
+        <td>
+          <%= link_to "Remove", {controller: :static_pages, action: :remove_compare, university: university.id}, method: 'delete', class: "btn btn-danger" %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">Location</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.city.present? && university.state.present? && university.zip_code.present? %>
+            <%= university.city %>, <%= university.state %> (<%= university.zip_code %>)
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">Student Count</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.student_count.present? %>
+            <%= number_with_precision(university.student_count, precision: 0, delimiter: ",") %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">Acceptance Rate</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.acceptance_rate.present? %>
+            <%= university.acceptance_rate %>%
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">SAT Reading Scores</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.q1_sat_reading.present? && university.q3_sat_reading.present? %>
+            <%= university.q1_sat_reading %> - <%= university.q3_sat_reading %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">SAT Math Scores</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.q1_sat_math.present? && university.q3_sat_math.present? %>
+            <%= university.q1_sat_math %> - <%= university.q3_sat_math %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">ACT Scores</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.q1_act.present? && university.q3_act.present? %>
+            <%= university.q1_act %> - <%= university.q3_act %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">In-State Costs</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.cost_in.present? %>
+            $<%= number_with_precision(university.cost_in, precision: 2, delimiter: ",") %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <th scope="row">Out-Of-State Costs</th>
+      <% @universities.each do |university| %>
+        <td>
+          <% if university.cost_out.present? %>
+            $<%= number_with_precision(university.cost_out, precision: 2, delimiter: ",") %>
+          <% else %>
+            <h6 class="text-muted">N/A</h6>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

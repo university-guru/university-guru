@@ -2,6 +2,8 @@
 
 # rubocop:disable Metrics/ClassLength
 class University < ApplicationRecord
+  has_many :comments, dependent: :destroy
+
   # rubocop:disable Style/ClassVars
   @@states = [
     'Alabama',

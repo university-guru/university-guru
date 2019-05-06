@@ -1,0 +1,26 @@
+<h1>Reported Comments</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">University</th>
+      <th scope="col">Content</th>
+      <th scope="col">Time</th>
+      <th scope="col">Report Count</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= User.find(comment.user_id).name %></td>
+        <td><%= University.find(comment.university_id).name %></td>
+        <td><%= comment.content %></td>
+        <td><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></td>
+        <td><%= comment.report_count || 0 %></td>
+        <td><%= link_to "Remove", comment, method: "delete", class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

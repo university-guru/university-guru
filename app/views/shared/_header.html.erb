@@ -30,6 +30,19 @@
 		<div class="col-lg-3">
 			<% if logged_in? %>
 				<div class="btn-group float-right" role="group">
+					<% if admin? || mod? %>
+						<div class="btn-group">
+							<button id="dashboard-toggle" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dashboards</button>
+							<div class="dropdown-menu" aria-labelledby="dashboard-toggle">
+								<% if admin? %>
+									<%= link_to "Admin Dashboard", {controller: :static_pages, action: :administrator}, class: "dropdown-item" %>
+								<% end %>
+								<% if mod? %>
+									<%= link_to "Moderator Dashboard", {controller: :static_pages, action: :moderator}, class: "dropdown-item" %>
+								<% end %>
+							</div>
+						</div>
+					<% end %>
 					<%= link_to current_user.name, user_path(current_user), role: "button", class: "btn btn-secondary" %>
 					<%= link_to "Log Out", logout_path, role: "button", class: "btn btn-secondary", method: "delete" %>
 				</div>

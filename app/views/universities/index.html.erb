@@ -1,3 +1,9 @@
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
 <% if params['mode'] == 'adv' || params['q'].present? %>
   <p>Search: <%= params['q'] %></p>	  <p class="small font-weight-bold mb-1">Search Criteria:</p>
 <% end %>
@@ -69,40 +75,42 @@
 	<%= will_paginate @universities, list_classes: %w(pagination justify-content-center d-none d-sm-none d-md-flex) %>
 
     <% @universities.each do |university| %>
-    <div class="card border-primary mb-3">
+    <div class="container-fluid mb-3">
 	<!--card body left-->
         <div class="row no-gutters">
-            <div class="col-11 border-right">
-                <div class="card-body" style="width:41rem;">
+            <div class="col-md-11 card border-primary">
+                <div class="card-body">
                     <%= link_to university_path(university) do %>
                     <h3 class="card-title"><%= university.name %></h3>
                     <% end %>
                     <span class="text-muted"><%= university.city %>, <%= university.state %> <%= university.zip_code %></span>
                 </div>
 				<!--card footer-->
-                <div class="card-footer border-primary text-muted" style="height:3rem;">
+                <div class="card-footer border-primary text-muted">
                     <div class="row no-gutters">
-                        <div class="col-4">
-                            STUDENT COUNT:<span>
-                                                <% if university.student_count.nil? %>
-                                                Not Reported
-                                                <% else %>
-                                                <%= number_with_precision(university.student_count, precision: 0, delimiter: ",") %>
-                                                <% end %>
-                                          </span>
+                        <div class="col-sm-4">
+                            <span class="h6">Student Count:</span>
+                            <span>
+                                <% if university.student_count.nil? %>
+                                  Not Reported
+                                <% else %>
+                                  <%= number_with_precision(university.student_count, precision: 0, delimiter: ",") %>
+                                <% end %>
+                            </span>
                         </div>
-                        <div class="col-6">
-                            TUITION AND FEES:   <span>
-                                                    <% if university.cost_in.nil? %>
-                                                    Not Reported
-                                                    <% else %>
-                                                    $<%= number_with_precision(university.cost_in, precision: 2, delimiter: ",") %>
-                                                    <% end %>
-                                                </span>
+                        <div class="col-sm-6">
+                            <span class="h6">Tuition and Fees:</span>
+                            <span>
+                                <% if university.cost_in.nil? %>
+                                  Not Reported
+                                <% else %>
+                                  $<%= number_with_precision(university.cost_in, precision: 2, delimiter: ",") %>
+                                <% end %>
+                            </span>
                         </div>
-                        <div class="col-2">
+                        <div class="col-sm-2">
                             <%= link_to university_path(university) do %>
-								<span class="text-primary stretched-link float-right">More info</span>
+								                    <span class="text-primary stretched-link float-right">More Info</span>
                             <% end %>
                         </div>
                     </div>
@@ -110,14 +118,14 @@
                 </div>
             </div>
 			<!--card body right-->
-            <div class="col-1 border-left">
-                <div class="btn-group-vertical card-img">
-                    <button class="btn btn-outline-primary card-img border-bottom" style="height:80px;">
-                        <%= image_tag("heart.png", width: "16px", height: "16px") %>
-                    </button>
-                    <button class="btn btn-outline-primary card-img border-top" style="height:80px;">
-                        <%= image_tag("tick.png", width: "16px", height: "16px") %>
-                    </button>
+            <div class="col-md-1">
+                <div class="btn-group-vertical h-100 w-100">
+                    <%= link_to('#', role: "button", class: "btn btn-outline-primary d-flex flex-column", "data-toggle": "tooltip", "data-placement": "top", title: "Add to Favorites List") do %>
+                        <%= image_tag("heart.png", width: "16px", height: "16px", class: "m-auto") %>
+                    <% end %>
+                    <%= link_to({controller: :static_pages, action: :compare, university: university.id}, role: "button", class: "btn btn-outline-primary d-flex flex-column", "data-toggle": "tooltip", "data-placement": "bottom", title: "Add to Comparison") do %>
+                        <%= image_tag("tick.png", width: "16px", height: "16px", class: "m-auto") %>
+                    <% end %>
                 </div>
             </div>
         </div>

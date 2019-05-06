@@ -26,6 +26,7 @@
 		<% unless @university.school_site.nil? %>
 			<%= link_to "View School's Site", @university.full_url, target: "_blank", role: "button", class: "btn btn-block btn-secondary" %>
 		<% end %>
+		<%= link_to "Compare", {controller: :static_pages, action: :compare, university: @university.id}, role: "button", class: "btn btn-block btn-secondary" %>
 	</div>
 </div>
 
@@ -33,7 +34,8 @@
 <nav>
 	<div class="nav nav-tabs mt-4 mb-2" id="page-tab" role="tablist">
 		<a class="nav-item nav-link active" id="academics-tab" data-toggle="tab" href="#academics" role="tab" aria-controls="academics" aria-selected="true">Academics</a>
-		<a class="nav-item nav-link" id="tuition-scholarships-tab" data-toggle="tab" href="#tuition-scholarships" role="tab" aria-controls="tuition-scholarships" aria-selected="true">Tuition & Scholarships</a>
+		<a class="nav-item nav-link" id="tuition-scholarships-tab" data-toggle="tab" href="#tuition-scholarships" role="tab" aria-controls="tuition-scholarships" aria-selected="false">Tuition & Scholarships</a>
+		<a class="nav-item nav-link" id="user-comments-tab" data-toggle="tab" href="#user-comments" role="tab" aria-controls="user-comments" aria-selected="false">User Comments (<%= @university.comments.length %>)</a>
 	</div>
 </nav>
 <!-- Tab contents -->
@@ -189,6 +191,34 @@
 					<span>$<%= number_with_precision(@university.cost_out, precision: 2, delimiter: ",") %></span>
 				<% end %>
 			</div>
+		</div>
+	</div>
+	<!-- User comments tab -->
+	<div class="tab-pane" id="user-comments" role="tabpanel" aria-labelledby="user-comments-tab">
+		<% if logged_in? %>
+			<div class="container">
+				<%= form_for :comment, url: {controller: :comments, action: "create"} do |f| %>
+					<%= hidden_field(nil, :user_id, value: user_id) %>
+					<%= hidden_field(nil, :university_id, value: @university.id) %>
+					<%= f.text_area :content, class: "form-control mb-1", placeholder: "Comment..." %>
+					<%= f.submit "Comment", class: "btn btn-primary mb-3" %>
+				<% end %>
+			</div>
+		<% end %>
+		<div class="container">
+			<% @university.comments.each do |comment| %>
+				<div class="card mb-2">
+					<div class="card-body">
+						<h6 class="card-title mb-0"><%= User.find(comment.user_id).name %></h6>
+						<span class="card-subtitle text-muted small mb-3"><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></span>
+						<p class="card-text mt-3"><%= comment.content %></p>
+						<%= link_to "Report", comment, action: "report", method: "patch", class: "mr-3" %>
+						<% if current_user == User.find(comment.user_id) || mod? %>
+							<%= link_to "Remove", comment, method: "delete" %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
 		</div>
 	</div>
 </div>
