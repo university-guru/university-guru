@@ -13,6 +13,15 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  post '/comments/create', to: 'comments#create'
+  patch '/comments/:id', to: 'comments#report'
+  resources :comments, only: %i[create destroy]
+
+  get '/dashboard/moderator', to: 'static_pages#moderator'
+  get '/dashboard/administrator', to: 'static_pages#administrator'
+  get '/compare', to: 'static_pages#compare'
+  delete '/compare', to: 'static_pages#remove_compare'
+
   # Only allow index/show actions on universities
   resources :universities, only: %i[index show], path: '/'
 end

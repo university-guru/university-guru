@@ -17,7 +17,17 @@
                 <!--Comments-->
                 <div class="form-group ">
                     <h2>Comments</h2>
-                    <p class="note font-italic">Coming soon!</p>
+                    <% @comments.each do |comment| %>
+                      <div class="card mb-2">
+                        <div class="card-body">
+                          <% university = University.find(comment.university_id) %>
+                          <h6 class="card-title mb-0"><%= university.name %></h6>
+                          <span class="card-subtitle text-muted small mb-3"><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></span>
+                          <p class="card-text mt-3"><%= comment.content %></p>
+                          <%= link_to "View University Page", university %>
+                        </div>
+                      </div>
+                    <% end %>
                 </div>
                 <!--request list-->
                 <div class="form-group">

@@ -17,4 +17,12 @@ module SessionsHelper
     session.delete(:user_id)
     @current_user = nil
   end
+
+  delegate :admin?, to: :current_user
+
+  delegate :mod?, to: :current_user
+
+  def user_id
+    current_user.nil? ? nil : current_user.id
+  end
 end
