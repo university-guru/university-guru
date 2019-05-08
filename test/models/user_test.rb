@@ -27,4 +27,11 @@ class UserTest < ActiveSupport::TestCase
                        password: 'password', password_confirmation: 'password')
     assert_not user.valid?
   end
+
+  test 'email saved' do
+    user = User.create(name: 'Example User', email: 'USER@EXAMPLE.COM', \
+                       password: 'password', password_confirmation: 'password')
+    user.save
+    assert user.email == 'user@example.com'
+  end
 end

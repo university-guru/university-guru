@@ -1,0 +1,93 @@
+<div class="container">
+  <h2>University Information</h2>
+  <% if @university.errors.any? %>
+    <div class="alert alert-danger">
+      <p class="h6"><%= pluralize(@university.errors.count, "Error") + ":" %></p>
+      <ul>
+        <% @university.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_for @university, url: university_update_path(@university) do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name, value: @university.name, class: "form-control" %>
+    </div>
+    <div class="form-row">
+      <div class="col-sm-5 form-group">
+        <%= f.label :city, "City" %>
+        <%= f.text_field :city, value: @university.city, id: "cityInput", class: "form-control" %>
+      </div>
+      <div class="col-sm-3 form-group">
+        <%= f.label :state, "State" %>
+        <%= f.select :state, options_for_select(University.states, @university.state), {}, {class: "form-control"} %>
+      </div>
+      <div class="col-sm-4 form-group">
+        <%= f.label :zip_code, "ZIP Code" %>
+        <%= f.number_field :zip_code, value: @university.zip_code, min: 0, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :student_count, "Student Count" %>
+      <%= f.number_field :student_count, value: @university.student_count, min: 0, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :acceptance_rate, "Acceptance Rate" %>
+      <%= f.number_field :acceptance_rate, value: @university.acceptance_rate, min: 0, max: 100, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <label>SAT Reading Scores</label>
+      <div class="form-row">
+        <div class="col-sm">
+          <%= f.number_field :q1_sat_reading, value: @university.q1_sat_reading, min: 0, max: 800, class: "form-control" %>
+        </div>
+        <div class="col-sm-1 text-center my-auto">
+          <span>to</span>
+        </div>
+        <div class="col-sm input">
+          <%= f.number_field :q3_sat_reading, value: @university.q3_sat_reading, min: 0, max: 800, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>SAT Math Scores</label>
+      <div class="form-row">
+        <div class="col-sm">
+          <%= f.number_field :q1_sat_math, value: @university.q1_sat_math, min: 0, max: 800, class: "form-control" %>
+        </div>
+        <div class="col-sm-1 text-center my-auto">
+          <span>to</span>
+        </div>
+        <div class="col-sm input">
+          <%= f.number_field :q3_sat_math, value: @university.q3_sat_math, min: 0, max: 800, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>ACT Composite Scores</label>
+      <div class="form-row">
+        <div class="col-sm">
+          <%= f.number_field :q1_act, value: @university.q1_act, min: 0, max: 36, class: "form-control" %>
+        </div>
+        <div class="col-sm-1 text-center my-auto">
+          <span>to</span>
+        </div>
+        <div class="col-sm input">
+          <%= f.number_field :q3_act, value: @university.q3_act, min: 0, max: 36, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :cost_in, "In-State Cost" %>
+      <%= f.number_field :cost_in, value: @university.cost_in, min: 0, step: 0.01, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :cost_out, "Out-Of-State Cost" %>
+      <%= f.number_field :cost_out, value: @university.cost_out, min: 0, step: 0.01, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>

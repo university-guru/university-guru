@@ -19,5 +19,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @comments = Comment.where(['user_id = ?', @user.id])
+    @favorites = @user.favs
+    @requests = AddRequest.where(['user_id = ? AND status = ?', @user.id, false])
   end
 end

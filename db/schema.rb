@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_05_221847) do
+ActiveRecord::Schema.define(version: 2019_05_07_225717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "add_requests", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "university_id"
+    t.text "content"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["university_id"], name: "index_add_requests_on_university_id"
+    t.index ["user_id"], name: "index_add_requests_on_user_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -58,9 +69,12 @@ ActiveRecord::Schema.define(version: 2019_05_05_221847) do
     t.string "password_digest"
     t.boolean "admin"
     t.boolean "mod"
+    t.text "favorites"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "add_requests", "universities"
+  add_foreign_key "add_requests", "users"
   add_foreign_key "comments", "universities"
   add_foreign_key "comments", "users"
 end

@@ -1,0 +1,29 @@
+<% content_for :title, "Administrator Dashboard" %>
+
+<h2>Requested Updates</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">University</th>
+      <th scope="col">Request Details</th>
+      <th scope="col">Time</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <% university = University.find(request.university_id) %>
+        <td><%= User.find(request.user_id).name %></td>
+        <td><%= university.name %></td>
+        <td><%= request.content %></td>
+        <td><%= request.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></td>
+        <td><%= link_to "View University", university, role: "button", class: "btn btn-secondary" %></td>
+        <td><%= link_to "Close", {controller: :add_requests, action: :close, id: request.id}, method: "patch", role: "button", class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

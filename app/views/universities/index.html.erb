@@ -120,8 +120,15 @@
 			<!--card body right-->
             <div class="col-md-1">
                 <div class="btn-group-vertical h-100 w-100">
-                    <%= link_to('#', role: "button", class: "btn btn-outline-primary d-flex flex-column", "data-toggle": "tooltip", "data-placement": "top", title: "Add to Favorites List") do %>
-                        <%= image_tag("heart.png", width: "16px", height: "16px", class: "m-auto") %>
+                    <% if logged_in? %>
+                      <% is_fav = current_user.favorite?(university.id.to_s) %>
+                      <%= link_to university, action: :toggle_favorite, method: "patch", role: "button", class: "btn #{is_fav ? "btn-primary" : "btn-outline-primary"} d-flex flex-column", "data-toggle": "tooltip", "data-placement": "top", title: "#{is_fav ? "Remove from" : "Add to"} Favorites List" do %>
+                          <%= image_tag("heart.png", width: "16px", height: "16px", class: "m-auto") %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to('#', role: "button", class: "btn btn-outline-primary d-flex flex-column disabled") do %>
+                          <%= image_tag("heart.png", width: "16px", height: "16px", class: "m-auto") %>
+                      <% end %>
                     <% end %>
                     <%= link_to({controller: :static_pages, action: :compare, university: university.id}, role: "button", class: "btn btn-outline-primary d-flex flex-column", "data-toggle": "tooltip", "data-placement": "bottom", title: "Add to Comparison") do %>
                         <%= image_tag("tick.png", width: "16px", height: "16px", class: "m-auto") %>
