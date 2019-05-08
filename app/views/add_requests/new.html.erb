@@ -1,0 +1,23 @@
+<h2 class="top-text">Information Request</h2>
+<% if current_user.errors.any? %>
+  <div class="alert alert-danger">
+    <p class="h6"><%= pluralize(current_user.errors.count, "Error") + ":" %></p>
+    <ul>
+      <% current_user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for @request, url: requests_new_path do |f| %>
+  <%= f.hidden_field :university_id, value: @university.id %>
+  <div class="form-group">
+    <label for="input-university">University</label>
+    <%= text_field_tag nil, @university.name, disabled: true, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <label for="input-content">Request Information</label>
+    <%= f.text_area :content, class: "form-control", placeholder: "Request details..." %>
+  </div>
+  <%= f.submit "Submit Request", class: "btn btn-primary" %>
+<% end %>

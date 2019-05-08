@@ -17,22 +17,57 @@
                 <!--Comments-->
                 <div class="form-group ">
                     <h2>Comments</h2>
-                    <% @comments.each do |comment| %>
-                      <div class="card mb-2">
-                        <div class="card-body">
-                          <% university = University.find(comment.university_id) %>
-                          <h6 class="card-title mb-0"><%= university.name %></h6>
-                          <span class="card-subtitle text-muted small mb-3"><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></span>
-                          <p class="card-text mt-3"><%= comment.content %></p>
-                          <%= link_to "View University Page", university %>
+                    <% if @comments.empty? %>
+                      <span class="text-muted font-italic">No comments!</span>
+                    <% else %>
+                      <% @comments.each do |comment| %>
+                        <div class="card mb-2">
+                          <div class="card-body">
+                            <% university = University.find(comment.university_id) %>
+                            <h6 class="card-title mb-0"><%= university.name %></h6>
+                            <span class="card-subtitle text-muted small mb-3"><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></span>
+                            <p class="card-text mt-3"><%= comment.content %></p>
+                            <%= link_to "View University Page", university %>
+                          </div>
                         </div>
-                      </div>
+                      <% end %>
                     <% end %>
                 </div>
                 <!--request list-->
                 <div class="form-group">
-                    <h2>Request list</h2>
-                    <p class="note font-italic">Coming soon!</p>
+                    <h2>Request List</h2>
+                    <% if @requests.empty? %>
+                      <span class="text-muted font-italic">No open requests!</span>
+                    <% else %>
+                      <% @requests.each do |request| %>
+                        <div class="card mb-2">
+                          <div class="card-body">
+                            <% university = University.find(request.university_id) %>
+                            <h5 class="card-text"><%= university.name %></h5>
+                            <p class="card-text"><%= request.content %></p>
+                            <%= link_to "View University", university, role: "button", class: "btn btn-secondary" %>
+                						<%= link_to "Close", {controller: :add_requests, action: :close, id: request.id}, method: "patch", role: "button", class: "btn btn-danger" %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                </div>
+                <div class="form-group">
+                    <h2>Favorites List</h2>
+                    <% if @favorites.empty? %>
+                      <span class="text-muted font-italic">No favorites!</span>
+                    <% else %>
+                      <% @favorites.each do |id| %>
+                        <% university = University.find(id) %>
+                        <div class="card mb-2">
+                          <div class="card-body">
+                            <h5 class="card-text"><%= university.name %></h5>
+                            <%= link_to "View University", university, role: "button", class: "btn btn-secondary" %>
+                            <%= link_to "Remove", university, action: :toggle_favorite, method: "patch", role: "button", class: "btn btn-danger" %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
                 </div>
                 <!--<input type="submit" class="btn btn-danger float-right" value="Edit">-->
             </form>

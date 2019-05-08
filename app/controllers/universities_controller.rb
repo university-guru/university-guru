@@ -42,4 +42,41 @@ class UniversitiesController < ApplicationController
   def show
     @university = University.find(params[:id])
   end
+
+  def edit
+    @university = University.find(params[:university_id])
+  end
+
+  def update
+    @university = University.find(params[:university_id])
+    if @university.update(university_params)
+      flash[:success] = 'Information updated!'
+      redirect_to @university
+    else
+      render 'edit'
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def toggle_favorite
+    return if current_user.nil?
+
+    if current_user.favorite?(params[:university_id])
+      current_user.remove_favorite(params[:university_id])
+    else
+      current_user.add_favorite(params[:university_id])
+    end
+
+    flash[:success] = 'Favorites list updated!'
+    redirect_to request.referer || root_url
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  private
+
+  def university_params
+    params.require(:university).permit(:name, :city, :state, :zip_code, \
+                                       :student_count, :q1_sat_reading, :q3_sat_reading, :q1_sat_math, \
+                                       :q3_sat_math, :q1_act, :q3_act, :acceptance_rate, :cost_in, :cost_out)
+  end
 end

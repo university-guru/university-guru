@@ -8,6 +8,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Rails/SkipsModelValidations:
+  Enabled: false
+
 Layout/EndOfLine:
   EnforcedStyle: lf
 

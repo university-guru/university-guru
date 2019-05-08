@@ -5,7 +5,9 @@ class StaticPagesController < ApplicationController
     @comments = Comment.where(['report_count > ?', 0]).order('report_count DESC')
   end
 
-  def administrator; end
+  def administrator
+    @requests = AddRequest.where(['status = ?', false]).order('created_at ASC')
+  end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def compare
@@ -43,4 +45,6 @@ class StaticPagesController < ApplicationController
     redirect_to controller: :static_pages, action: :compare
   end
   # rubocop:enable Metrics/AbcSize
+
+  def help; end
 end
