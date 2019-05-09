@@ -223,7 +223,7 @@
 						<span class="card-subtitle text-muted small mb-3"><%= comment.created_at.localtime.strftime("%d/%m/%Y - %I:%M:%S") %></span>
 						<p class="card-text mt-3"><%= comment.content %></p>
 						<%= link_to "Report", comment, action: "report", method: "patch", class: "mr-3" %>
-						<% if current_user == User.find(comment.user_id) || mod? %>
+						<% if logged_in? && (current_user == User.find(comment.user_id) || mod?) %>
 							<%= link_to "Remove", comment, method: "delete" %>
 						<% end %>
 					</div>
