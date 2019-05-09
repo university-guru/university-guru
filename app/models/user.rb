@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   has_many :add_requests, dependent: :destroy
 
+  # Adds this university to the user's favorites list
   def add_favorite(id)
     favs_list = []
     favs_list = JSON.parse(favorites) if favorites.present?
@@ -21,6 +22,7 @@ class User < ApplicationRecord
     update_attribute(:favorites, JSON.generate(favs_list))
   end
 
+  # Removes this university from the user's favorites list
   def remove_favorite(id)
     return if favorites.blank?
 
@@ -29,6 +31,7 @@ class User < ApplicationRecord
     update_attribute(:favorites, JSON.generate(favs_list))
   end
 
+  # Checks if this university is on this user's favorites list
   def favorite?(id)
     if favorites.present?
       favs_list = JSON.parse(favorites)
@@ -38,6 +41,7 @@ class User < ApplicationRecord
     end
   end
 
+  # Gets the list of university IDs on this user's favorites list
   def favs
     favs_list = []
     favs_list = JSON.parse(favorites) if favorites.present?

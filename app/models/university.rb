@@ -4,6 +4,7 @@
 class University < ApplicationRecord
   has_many :comments, dependent: :destroy
 
+  # An array of states used for dropdown menus
   # rubocop:disable Style/ClassVars
   @@states = [
     'Alabama',

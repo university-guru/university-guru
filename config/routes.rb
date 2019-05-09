@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # URL root should lead to university list
+  root 'universities#index'
+
   get 'requests/new', to: 'add_requests#new'
   post 'requests/new', to: 'add_requests#create'
   patch 'requests/:id', to: 'add_requests#close'
 
   get 'sessions/new'
-  # URL root should lead to university list
-  root 'universities#index'
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'

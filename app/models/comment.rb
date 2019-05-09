@@ -10,6 +10,7 @@ class Comment < ApplicationRecord
 
   default_scope -> { order(created_at: :desc) }
 
+  # Increases the report count for this comment
   def report
     self.report_count = if report_count.nil?
                           1

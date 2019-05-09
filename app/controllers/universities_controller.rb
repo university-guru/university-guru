@@ -43,10 +43,13 @@ class UniversitiesController < ApplicationController
     @university = University.find(params[:id])
   end
 
+  # Displays the edit page for the university
   def edit
     @university = University.find(params[:university_id])
   end
 
+  # Updates the information in the database based on the information
+  # entered in the edit page
   def update
     @university = University.find(params[:university_id])
     if @university.update(university_params)
@@ -57,6 +60,7 @@ class UniversitiesController < ApplicationController
     end
   end
 
+  # Toggles the favorite status of this university for the current user
   # rubocop:disable Metrics/AbcSize
   def toggle_favorite
     return if current_user.nil?
@@ -74,6 +78,7 @@ class UniversitiesController < ApplicationController
 
   private
 
+  # Checks to make sure only valid parameters are accepted
   def university_params
     params.require(:university).permit(:name, :city, :state, :zip_code, \
                                        :student_count, :q1_sat_reading, :q3_sat_reading, :q1_sat_math, \

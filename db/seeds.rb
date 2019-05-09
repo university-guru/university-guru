@@ -2,6 +2,7 @@
 
 require 'csv'
 
+# Map CSV headers to Ruby symbols
 define_singleton_method('fields') do
   { id: 'unitid',
     name: 'institution name',
@@ -23,8 +24,7 @@ end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
 def create(row)
-  # Add a University object to the database based on the JSON data
-  # recieved from the data.gov API
+  # Add a University object to the database based on CSV data and the headers above
   # NOTE: SAT/ACT scores are stored as quartiles (first quartile, third quartile)
   University.create(
     name: row[fields[:name]],
@@ -49,6 +49,7 @@ end
 csv_file = Rails.root.join('db', 'seeds', 'data.csv')
 csv = CSV.read(csv_file.to_path, headers: true)
 
+# Create a new university for each CSV row
 csv.each do |row|
   create(row)
 end

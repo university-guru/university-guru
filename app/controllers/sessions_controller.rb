@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  # Takes the user to the login page
   def new; end
 
+  # Signs the user in and allows them to maintain login between pages
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
@@ -14,6 +16,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # Logs the user out
   def destroy
     log_out
     redirect_to root_url
