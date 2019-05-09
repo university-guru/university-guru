@@ -40,3 +40,5 @@ bundle exec rake university_guru:deploy
 
 Finally, visit [localhost:3000](http://localhost:3000) in your browser to view
 your running application.
+
+_For the purposes of this assignment, a **Super User** account has been automatically created to allow for testing of the administrative/moderator dashboards (email: `superuser@example.com`, password: `password`)._

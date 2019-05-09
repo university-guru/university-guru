@@ -53,3 +53,7 @@ csv = CSV.read(csv_file.to_path, headers: true)
 csv.each do |row|
   create(row)
 end
+
+# Generate a default admin/mod user (this is for the assigment only, and would not be present in actual software)
+User.create(name: 'Super User', email: 'superuser@example.com', password: 'password', \
+            password_confirmation: 'password', admin: true, mod: true)
