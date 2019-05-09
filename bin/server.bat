@@ -12,7 +12,7 @@ set query_alter_createdb="ALTER ROLE %USERNAME% CREATEDB;"
 psql -U postgres -c %query_db%
 psql -U postgres -c %query_role%
 psql -U postgres -c %query_alter_login%
-psql -U postgres -c %query_createdb%
+psql -U postgres -c %query_alter_createdb%
 
 echo Setting up Ruby on Rails...
 call gem uninstall bcrypt
